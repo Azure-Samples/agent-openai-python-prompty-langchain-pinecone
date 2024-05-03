@@ -1,53 +1,70 @@
-import langchain_prompty
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import AzureChatOpenAI
-import langchain
-langchain.verbose = True
-langchain.debug = True
-langchain.llm_cache = False
-from typing import Dict
-
-# Import things that are needed generically
-from langchain.pydantic_v1 import BaseModel, Field
-from langchain.tools import BaseTool, StructuredTool, tool
-from langchain_community.tools.convert_to_openai import format_tool_to_openai_function
-from langchain_core.messages import AIMessage, HumanMessage
-from langchain_core.messages.base import BaseMessage
 from typing import List, Tuple
+
+from langchain.agents import AgentExecutor
 from langchain.agents.format_scratchpad import format_to_openai_function_messages
+from langchain.tools import BaseTool, StructuredTool, tool
 from langchain.agents.output_parsers import OpenAIFunctionsAgentOutputParser
+from langchain_community.chat_models import ChatOpenAI
+from langchain_community.tools.convert_to_openai import format_tool_to_openai_function
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_openai import AzureChatOpenAI
+from langchain_community.document_loaders import TextLoader
+from langchain_openai import AzureOpenAIEmbeddings
+from langchain_pinecone import PineconeVectorStore
+import os
+from .langchain_prompty import create_chat_prompt
+from langchain_text_splitters import CharacterTextSplitter
+# Define the arguments schema model
+class SearchQueryArgs(BaseModel):
+    query: str = Field(..., example="What is the current state of the stock market?")
 
-@tool
-def search(query: str) -> str:
-    """Look up things online."""
-    return "Thea meaning of life is Microsoft"
+def prepare_search_client(local_load: bool = False):
+    embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'))
+    index_name = "langchain-test-index"
+    if local_load:
+        loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), './data/documents.json'))
+        documents = loader.load()
+        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+        docs = text_splitter.split_documents(documents)
+        docsearch = PineconeVectorStore.from_documents(docs, embeddings, index_name=index_name)
+    else:
+        docsearch = PineconeVectorStore.from_existing_index(index_name=index_name, embedding=embeddings)
+    return docsearch
 
-llm = AzureChatOpenAI(
-    openai_api_version="2023-12-01-preview",
-    azure_deployment="gpt-4",
+docsearch = prepare_search_client(False)
+#set the `PINECONE_API_KEY` environment variable to your Pinecone API key
+def pinecone_search_tool(query:str):
+    results = docsearch.similarity_search(query)
+    return results[0].page_content
+
+pinecone_search = StructuredTool.from_function(
+    func=pinecone_search_tool,
+    name="pinecone_search",
+    description="useful for when you need to answer questions about current events",
+    args_schema=SearchQueryArgs
 )
 
-tools = [search]
+llm = AzureChatOpenAI(
+    azure_deployment=os.getenv('AZURE_DEPLOYMENT')
+)
+tools = [pinecone_search]
 llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
 
-def _format_chat_history(chat_history: List[BaseMessage]):
-    print('_format_chat_history', chat_history)
-    buffer = []
-    for x in chat_history:
-        buffer.append({"role": x.type, "content": x.content})
-    return buffer
+prompt = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'basic_chat.prompty'))
+
+
+
 
 def _format_chat_history(chat_history: List[Tuple[str, str]]):
     buffer = []
     for human, ai in chat_history:
-        buffer.append({"role": 'user', "content": human})
-        buffer.append({"role": 'assistant', "content": ai})
+        buffer.append(HumanMessage(content=human))
+        buffer.append(AIMessage(content=ai))
     return buffer
-
-from langchain_core.runnables import RunnableLambda
-run_prompty = langchain_prompty.create_chat_prompt("/mnt/c/src/langserve-test/packages/openai-functions-agent/openai_functions_agent/basic_chat.prompty")
-
 
 agent = (
     {
@@ -57,12 +74,11 @@ agent = (
             x["intermediate_steps"]
         ),
     }
-    | run_prompty
+    | prompt
     | llm_with_tools
     | OpenAIFunctionsAgentOutputParser()
 )
 
-from langchain.agents import AgentExecutor
 
 class AgentInput(BaseModel):
     input: str
@@ -74,4 +90,3 @@ class AgentInput(BaseModel):
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True).with_types(
     input_type=AgentInput
 )
-
