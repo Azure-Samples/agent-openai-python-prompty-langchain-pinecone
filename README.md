@@ -1,6 +1,6 @@
-# Langchain+Prompty+Pinecone
+# Function Calling with Prompty, LangChain and Pinecone
 In this sample, we utilize the new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent. This agent with Retrieval-Augmented Generation (RAG) technologyis is capable of answering user questions based on the provided data by integrating real-time information retrieval with generative responses.
-# Langchain+Prompty+Pinecone
+# Function Calling with Prompty, LangChain and Pinecone
  This sample uses Azure's new Promptly tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
 
 By the end of deploying this template, you should be able to:
@@ -42,7 +42,31 @@ Once you have an Azure account you have two options for setting up this project.
 ### Security requirements
 The Elastic Search tool does not support Microsoft Managed Identity now. It is recommended to use [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault/) to secure your API keys.
 
-### Local Environment 
+
+### Project setup
+
+You have a few options for setting up this project.
+The easiest way to get started is GitHub Codespaces, since it will setup all the tools for you,
+but you can also [set it up locally](#local-environment) if desired.
+
+#### GitHub Codespaces
+
+You can run this repo virtually by using GitHub Codespaces, which will open a web-based VS Code in your browser:
+
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=599293758&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestUs2)
+
+Once the codespace opens (this may take several minutes), open a terminal window.
+
+#### VS Code Dev Containers
+
+A related option is VS Code Dev Containers, which will open the project in your local VS Code using the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers):
+
+1. Start Docker Desktop (install it if not already installed)
+1. Open the project:
+    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/azure-search-openai-demo)
+1. In the VS Code window that opens, once the project files show up (this may take several minutes), open a terminal window.
+
+#### Local environment
 
 - Install [azd](https://aka.ms/install-azd)
     - Windows: `winget install microsoft.azd`
@@ -84,7 +108,7 @@ azd pipeline config
 ```
 3. Test Deployment with the `validate_deployment.ipynb` notebook.
  
-### Local Development
+### Run the app locally
 Describe how to run and develop the app locally
 
 ## Clean up
