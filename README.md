@@ -38,7 +38,8 @@ This project framework provides the following features:
 
 
 Once you have an Azure account you have two options for setting up this project. The easiest way to get started is GitHub Codespaces, since it will setup all the tools for you, but you can also set it up [locally]() if desired.
-
+### Pinecone Account
+Go to [Pinecone](https://www.pinecone.io/) and create your account if you don't have one. For this quickstart template, please create a index in your Pinecone account named `langchain-test-index`. Keep your Pinecone API key in a safe place and you will need to pass it for this template.
 ### Security requirements
 The Elastic Search tool does not support Microsoft Managed Identity now. It is recommended to use [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault/) to secure your API keys.
 
