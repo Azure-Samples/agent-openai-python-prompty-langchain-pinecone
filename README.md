@@ -74,14 +74,29 @@ azd env new
 ```
 Enter a name that will be used for the resource group. This will create a new folder in the .azure folder, and set it as the active environment for any calls to azd going forward.
 
-1. Provision and deploy the project to Azure: `azd up`
-2. Set up CI/CD with `azd pipeline config`
-3. Talk to your agent: 
-please take the `validate_deployment.ipynb` as reference.
+1. Provision and deploy the project to Azure: 
+```
+azd up
+```
+2. Set up CI/CD with 
+```
+azd pipeline config
+```
+3. Test Deployment with the `validate_deployment.ipynb` notebook.
  
 ### Local Development
 Describe how to run and develop the app locally
- 
+
+## Clean up
+
+To clean up all the resources created by this sample:
+
+1. Run `azd down`
+2. When asked if you are sure you want to continue, enter `y`
+3. When asked if you want to permanently delete the resources, enter `y`
+
+The resource group and all the resources will be deleted.
+
 ## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
  
