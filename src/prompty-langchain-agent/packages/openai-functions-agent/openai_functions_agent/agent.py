@@ -26,7 +26,7 @@ token_provider = get_bearer_token_provider(
     )
 
 def prepare_search_client(local_load: bool = False):
-    embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'))
+    embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'), azure_ad_token_provider=token_provider)
     index_name = "langchain-test-index"
     if local_load:
         loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), './data/documents.json'))
@@ -38,7 +38,7 @@ def prepare_search_client(local_load: bool = False):
         docsearch = PineconeVectorStore.from_existing_index(index_name=index_name, embedding=embeddings)
     return docsearch
 
-docsearch = prepare_search_client(False)
+docsearch = prepare_search_client(True)
 #set the `PINECONE_API_KEY` environment variable to your Pinecone API key
 def pinecone_search_tool(query:str):
     results = docsearch.similarity_search(query)

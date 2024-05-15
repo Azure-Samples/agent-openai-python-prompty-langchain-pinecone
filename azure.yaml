@@ -21,5 +21,4 @@ services:
           environment_variables.AZURE_DEPLOYMENT: ${AZURE_OPENAI_DEPLOYMENT}
           environment_variables.AZURE_OPENAI_EMBEDDING_DEPLOYMENT: ${AZURE_OPENAI_EMBEDDING_DEPLOYMENT}
           environment_variables.OPENAI_API_VERSION: "2023-03-15-preview"
-          environment_variables.ELASTICSEARCH_ENDPOINT: ${ELASTICSEARCH_ENDPOINT}
-          environment_variables.ELASTICSEARCH_API_KEY: ${ELASTICSEARCH_API_KEY}
+          environment_variables.PINECONE_API_KEY : ${PINECONE_API_KEY}

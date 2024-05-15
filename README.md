@@ -109,7 +109,45 @@ azd pipeline config
 3. Test Deployment with the `validate_deployment.ipynb` notebook.
  
 ### Run the app locally
-Describe how to run and develop the app locally
+#### Prerequisite
+- A valid PINECONE account
+- An Azure OpenAI endpoint with two deployments: one GPT deployment for chat and one embedding deployment for embedding.
+- Assign yourself `Cognitive Services User` role to the corresponding Azure AI services.
+- A created index in your PINECONE account consistent with the index name in `src\prompty-langchain-agent\packages\openai-functions-agent\openai_functions_agent\agent.py`. By default it is called `langchain-test-index`
+- Put the data you want PINECONE work with in `src\prompty-langchain-agent\packages\openai-functions-agent\openai_functions_agent\data` folder and change the data file name in `agent.py` (change the `local_load` settings as well)
+- Create and save your PINECONE api key.
+
+#### Dependency requirements
+- Python=3.11
+- poetry==1.6.1
+
+#### Go to `src\prompty-langchain-agent` folder and do followings:
+
+1. use poetry to install all dependency for the app.
+
+`poetry install --no-interaction --no-ansi`
+
+2. use poetry to install all dependency for the packages:
+
+Go to  `packages\openai-functions-agent` and run:
+`poetry install --no-interaction --no-ansi`
+
+3. set environment variables
+
+```
+AZURE_OPENAI_ENDPOINT= <your aoai endpoint>
+OPENAI_API_VERSION= <your aoai api version>
+AZURE_OPENAI_DEPLOYMENT= <your aoai deployment name for chat>
+AZURE_OPENAI_EMBEDDING_DEPLOYMENT= <your aoai deployment name for embedding>
+PINECONE_API_KEY= <Your PINECONE API>
+```
+
+4. Now try to run it on your local
+`langchian serve`
+
+1. you can go to http://localhost:8000/openai-functions-agent/playground/ to test.
+
+1. you can mention your index in `input` to tell agent to use search tool.
 
 ## Clean up
 
