@@ -31,8 +31,8 @@ param logAnalyticsWorkspaceName string = ''
 param endpointName string = ''
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
-@description('The name of the azd service to use for the machine learning endpoint')
-param endpointServiceName string = 'prompty-langchain-agent'
+@description('The name of the azd deployment')
+param serviceName string = 'chat'
 
 param useContainerRegistry bool = true
 param useAppInsights bool = true
@@ -43,8 +43,10 @@ var tags = { 'azd-env-name': environmentName }
 var deploymentName =  'gpt-35-turbo'
 
 // Organize resources in a resource group
-resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' existing= {
-  name: resourceGroupName
+resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: !empty(resourceGroupName) ? resourceGroupName : 'rg-${environmentName}'
+  location: location
+  tags: tags
 }
 
 module ai './core/host/ai-environment.bicep' = {
@@ -107,7 +109,7 @@ module machineLearningEndpoint './core/host/ml-online-endpoint.bicep' = {
     name: !empty(endpointName) ? endpointName : 'mloe-${resourceToken}'
     location: location
     tags: tags
-    serviceName: endpointServiceName
+    serviceName: serviceName
     aiHubName: ai.outputs.hubName
     aiProjectName: ai.outputs.projectName
     keyVaultName: ai.outputs.keyVaultName

@@ -24,39 +24,44 @@ class SearchQueryArgs(BaseModel):
 token_provider = get_bearer_token_provider(
         DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
-
-def prepare_search_client(local_load: bool = False):
-    embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'), azure_ad_token_provider=token_provider)
-    index_name = "langchain-test-index"
-    if local_load:
-        loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), './data/documents.json'))
-        documents = loader.load()
-        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-        docs = text_splitter.split_documents(documents)
-        docsearch = PineconeVectorStore.from_documents(docs, embeddings, index_name=index_name)
-    else:
-        docsearch = PineconeVectorStore.from_existing_index(index_name=index_name, embedding=embeddings)
-    return docsearch
-
-docsearch = prepare_search_client(True)
-#set the `PINECONE_API_KEY` environment variable to your Pinecone API key
-def pinecone_search_tool(query:str):
-    results = docsearch.similarity_search(query)
-    return results[0].page_content
-
-pinecone_search = StructuredTool.from_function(
-    func=pinecone_search_tool,
-    name="pinecone_search",
-    description="useful for when you need to answer questions about current events",
-    args_schema=SearchQueryArgs
-)
-
 llm = AzureChatOpenAI(
     azure_deployment=os.getenv('AZURE_OPENAI_DEPLOYMENT'),
     azure_ad_token_provider=token_provider
 )
-tools = [pinecone_search]
-llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
+
+if os.getenv('PINECONE_API_KEY') is not None:
+    def prepare_search_client(local_load: bool = False):
+        embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'), azure_ad_token_provider=token_provider)
+        index_name = "langchain-test-index"
+        if local_load:
+            loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), './data/documents.json'))
+            documents = loader.load()
+            text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+            docs = text_splitter.split_documents(documents)
+            docsearch = PineconeVectorStore.from_documents(docs, embeddings, index_name=index_name)
+        else:
+            docsearch = PineconeVectorStore.from_existing_index(index_name=index_name, embedding=embeddings)
+        return docsearch
+
+    docsearch = prepare_search_client(True)
+    #set the `PINECONE_API_KEY` environment variable to your Pinecone API key
+    def pinecone_search_tool(query:str):
+        results = docsearch.similarity_search(query)
+        return results[0].page_content
+
+    pinecone_search = StructuredTool.from_function(
+        func=pinecone_search_tool,
+        name="pinecone_search",
+        description="useful for when you need to answer questions about current events",
+        args_schema=SearchQueryArgs
+    )
+    tools = [pinecone_search]
+    llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
+else:
+    tools = []
+    llm_with_tools = llm
+
+
 
 prompt = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'basic_chat.prompty'))
 
