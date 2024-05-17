@@ -1,3 +1,20 @@
+---
+page_type: sample
+languages:
+  - azdeveloper
+  - python
+  - bicep
+products:
+  - azure
+  - ai-services
+  - azure-openai
+urlFragment: agent-openai-python-prompty-langchain-pinecone
+name: Function Calling with Prompty, LangChain and Pinecone
+description: In this sample, we utilize the new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent.
+---
+
+<!-- YAML front-matter schema: https://review.learn.microsoft.com/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
+
 # Function Calling with Prompty, LangChain and Pinecone
  This sample uses Azure's new Promptly tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
 
@@ -18,7 +35,7 @@ This project framework provides the following features:
 * You will be able to use this app with Azure AI Studio
  
 ### Architecture Diagram
-![architecture-diagram-prompty-Pinecone](/images/architecture-diagram-prompty-pinecone.png)
+![architecture-diagram-prompty-Pinecone](../images/architecture-diagram-prompty-pinecone.png)
 
 
  
@@ -181,5 +198,5 @@ We do support Langsmith and you can follow their doc make it work.
 [Get started with LangSmith](https://docs.smith.langchain.com/
 )
 
-![langsmith](images/image-2.png)
+![langsmith](../images/image-2.png)
 
