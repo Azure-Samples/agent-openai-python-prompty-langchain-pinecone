@@ -7,7 +7,7 @@ metadata:
 # Then, use `azd deploy` to deploy your project to Azure.
 # ################################################################
 services:
-  chat-agent-pinecone:
+  chat:
     host: ai.endpoint
     language: python
     config:
