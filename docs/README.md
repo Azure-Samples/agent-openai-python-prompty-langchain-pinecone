@@ -9,8 +9,6 @@ products:
   - ai-services
   - azure-openai
 urlFragment: agent-openai-python-prompty-langchain-pinecone
-name: Function Calling with Prompty, LangChain and Pinecone
-description: In this sample, we utilize the new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent.
 ---
 
 <!-- YAML front-matter schema: https://review.learn.microsoft.com/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
