@@ -1,7 +1,5 @@
-# Function Calling with Prompty, LangChain and Pinecone
-In this sample, we utilize the new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent. This agent with Retrieval-Augmented Generation (RAG) technologyis is capable of answering user questions based on the provided data by integrating real-time information retrieval with generative responses.
-# Function Calling with Prompty, LangChain and Pinecone
- This sample uses Azure's new Promptly tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
+# Function Calling with Prompty, LangChain, and Pinecone
+This sample uses Azure's new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
 
 By the end of deploying this template, you should be able to:
 
