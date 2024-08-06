@@ -83,7 +83,7 @@ A related option is VS Code Dev Containers, which will open the project in your 
  
 1. Clone the repository and intialize the project: 
 ```
-azd init agent-openai-python-prompty-langchain-pinecone
+azd init -t agent-openai-python-prompty-langchain-pinecone
 ```
 Note that this command will initialize a git repository, so you do not need to clone this repository.
 
