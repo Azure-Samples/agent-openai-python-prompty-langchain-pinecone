@@ -169,7 +169,8 @@ This template uses [MODEL 1] and [MODEL 2] which may not be available in all Azu
 
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
 
-* [Azure Product] - [plan type] [link to pricing for product](https://azure.microsoft.com/pricing/)
+- Azure OpenAI: Standard tier, GPT and Ada models. Pricing per 1K tokens used, and at least 1K tokens are used per question. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
+- Azure AI Speech: Pay as you go, Standard,	$1 per hour [Pricing](https://azure.microsoft.com/en-gb/pricing/details/cognitive-services/speech-services/)
 
 ### Security
 
@@ -177,12 +178,6 @@ You can estimate the cost of this project's architecture with [Azure's pricing c
 > When implementing this template please specify whether the template uses Managed Identity or Key Vault
 
 This template has either [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) or Key Vault built in to eliminate the need for developers to manage these credentials. Applications can use managed identities to obtain Microsoft Entra tokens without having to manage any credentials. Additionally, we have added a [GitHub Action tool](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure best practices in your repo we recommend anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled in your repos.
-
-## Resources
-
-- For more information about working with Prompty and Prompt Flow, read the docs [here](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html)
-- [azure-search-openai-demo](https://github.com/Azure-Samples/azure-search-openai-demo?tab=readme-ov-file)
-- [Develop Python apps that use Azure AI services](https://learn.microsoft.com/azure/developer/python/azure-ai-for-python-developers)
  
 ## Langsmith
 
