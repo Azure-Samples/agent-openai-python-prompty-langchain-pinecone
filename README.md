@@ -17,10 +17,8 @@ description: Using Prompty, LangChain, and Pinecone with Python, this sample bui
 ---
 <!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
 
-# Function Calling with Prompty, LangChain and Pinecone
-In this sample, we utilize the new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent. This agent with Retrieval-Augmented Generation (RAG) technologyis is capable of answering user questions based on the provided data by integrating real-time information retrieval with generative responses.
-# Function Calling with Prompty, LangChain and Pinecone
- This sample uses Azure's new Promptly tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
+# Function Calling with Prompty, LangChain, and Pinecone
+This sample uses Azure's new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
 
 By the end of deploying this template, you should be able to:
 
@@ -102,31 +100,29 @@ A related option is VS Code Dev Containers, which will open the project in your 
  
 1. Clone the repository and intialize the project: 
 ```
-azd init agent-openai-python-prompty-langchain-pinecone
+azd init -t agent-openai-python-prompty-langchain-pinecone
 ```
+Enter a name to create a new environment. The name is also used for the resource group. This will create a new folder in the .azure folder, and set it as the active environment for any calls to azd going forward.
+
 Note that this command will initialize a git repository, so you do not need to clone this repository.
 
 2. Login to your Azure account:
 ```
 azd auth login
 ```
-3. Set following environment variables:
-`AZURE_RESOURCE_GROUP` and `PINECONE_API_KEY`
-1. Create a new azd environment:
+3. Set following environment variable:
 ```
-azd env new
+azd env set PINECONE_API_KEY <key>
 ```
-Enter a name that will be used for the resource group. This will create a new folder in the .azure folder, and set it as the active environment for any calls to azd going forward.
-
-1. Provision and deploy the project to Azure: 
+4. Provision and deploy the project to Azure: 
 ```
 azd up
 ```
-2. Set up CI/CD with 
+5. Set up CI/CD with 
 ```
 azd pipeline config
 ```
-3. Test Deployment with the `validate_deployment.ipynb` notebook.
+6. Test Deployment with the `validate_deployment.ipynb` notebook.
  
 ### Run the app locally
 #### Prerequisite
