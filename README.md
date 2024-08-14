@@ -1,3 +1,22 @@
+---
+page_type: sample
+languages:
+- azdeveloper
+- python
+- powershell
+- bash
+- bicep
+products:
+- azure
+- azure-openai
+- azure-machine-learning
+- azure-key-vault
+urlFragment: agent-openai-python-prompty-langchain-pinecone
+name: Function Calling with Prompty, LangChain and Pinecone
+description: Using Prompty, LangChain, and Pinecone with Python, this sample builds an LLM search agent that leverages Retrieval-Augmented Generation (RAG) to answer user questions based on real-time information retrieval and generative responses.
+---
+<!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
+
 # Function Calling with Prompty, LangChain, and Pinecone
 This sample uses Azure's new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
 
