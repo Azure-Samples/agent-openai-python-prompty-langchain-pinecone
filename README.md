@@ -177,23 +177,23 @@ The resource group and all the resources will be deleted.
 
 ## Guidance
 
-### Costs
+## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
  
 - Azure OpenAI: Standard tier, GPT and Ada models. Pricing per 1K tokens used, and at least 1K tokens are used per question. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
 - Azure AI Speech: Pay as you go, Standard,	$1 per hour [Pricing](https://azure.microsoft.com/en-gb/pricing/details/cognitive-services/speech-services/)
 
-### Securtiy Guidelines
+## Securtiy Guidelines
 
 We recommend using keyless authentication for this project. Read more about why you should use managed identities on our [blog](https://techcommunity.microsoft.com/t5/microsoft-developer-community/using-keyless-authentication-with-azure-openai/ba-p/4111521). 
 
-### Resources
+## Resources
 
 - For more information about working with Prompty and Prompt Flow, read the docs [here](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html)
 - [azure-search-openai-demo](https://github.com/Azure-Samples/azure-search-openai-demo?tab=readme-ov-file)
 - [Develop Python apps that use Azure AI services](https://learn.microsoft.com/azure/developer/python/azure-ai-for-python-developers)
  
-### Langsmith
+## Langsmith
 
 We do support Langsmith and you can follow their doc make it work.
 
