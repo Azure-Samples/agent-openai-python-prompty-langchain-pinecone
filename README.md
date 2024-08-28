@@ -1,3 +1,22 @@
+---
+page_type: sample
+languages:
+- azdeveloper
+- python
+- powershell
+- bash
+- bicep
+products:
+- azure
+- azure-openai
+- azure-machine-learning
+- azure-key-vault
+urlFragment: agent-openai-python-prompty-langchain-pinecone
+name: Function Calling with Prompty, LangChain and Pinecone
+description: Using Prompty, LangChain, and Pinecone with Python, this sample builds an LLM search agent that leverages Retrieval-Augmented Generation (RAG) to answer user questions based on real-time information retrieval and generative responses.
+---
+<!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
+
 # Function Calling with Prompty, LangChain, and Pinecone
 This sample uses Azure's new Prompty tool, Langchain, and Pinecone to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
 
@@ -83,29 +102,27 @@ A related option is VS Code Dev Containers, which will open the project in your 
 ```
 azd init -t agent-openai-python-prompty-langchain-pinecone
 ```
+Enter a name to create a new environment. The name is also used for the resource group. This will create a new folder in the .azure folder, and set it as the active environment for any calls to azd going forward.
+
 Note that this command will initialize a git repository, so you do not need to clone this repository.
 
 2. Login to your Azure account:
 ```
 azd auth login
 ```
-3. Set following environment variables:
-`AZURE_RESOURCE_GROUP` and `PINECONE_API_KEY`
-1. Create a new azd environment:
+3. Set following environment variable:
 ```
-azd env new
+azd env set PINECONE_API_KEY <key>
 ```
-Enter a name that will be used for the resource group. This will create a new folder in the .azure folder, and set it as the active environment for any calls to azd going forward.
-
-1. Provision and deploy the project to Azure: 
+4. Provision and deploy the project to Azure: 
 ```
 azd up
 ```
-2. Set up CI/CD with 
+5. Set up CI/CD with 
 ```
 azd pipeline config
 ```
-3. Test Deployment with the `validate_deployment.ipynb` notebook.
+6. Test Deployment with the `validate_deployment.ipynb` notebook.
  
 ### Run the app locally
 #### Prerequisite
@@ -160,26 +177,23 @@ The resource group and all the resources will be deleted.
 
 ## Guidance
 
-### Region Availability
-
-This template uses [MODEL 1] and [MODEL 2] which may not be available in all Azure regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
-  * We recommend using [SUGGESTED REGION]
-
 ### Costs
-
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
-
+ 
 - Azure OpenAI: Standard tier, GPT and Ada models. Pricing per 1K tokens used, and at least 1K tokens are used per question. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
 - Azure AI Speech: Pay as you go, Standard,	$1 per hour [Pricing](https://azure.microsoft.com/en-gb/pricing/details/cognitive-services/speech-services/)
 
-### Security
+### Securtiy Guidelines
 
-> [!NOTE]
-> When implementing this template please specify whether the template uses Managed Identity or Key Vault
+We recommend using keyless authentication for this project. Read more about why you should use managed identities on our [blog](https://techcommunity.microsoft.com/t5/microsoft-developer-community/using-keyless-authentication-with-azure-openai/ba-p/4111521). 
 
-This template has either [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) or Key Vault built in to eliminate the need for developers to manage these credentials. Applications can use managed identities to obtain Microsoft Entra tokens without having to manage any credentials. Additionally, we have added a [GitHub Action tool](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure best practices in your repo we recommend anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled in your repos.
+### Resources
+
+- For more information about working with Prompty and Prompt Flow, read the docs [here](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html)
+- [azure-search-openai-demo](https://github.com/Azure-Samples/azure-search-openai-demo?tab=readme-ov-file)
+- [Develop Python apps that use Azure AI services](https://learn.microsoft.com/azure/developer/python/azure-ai-for-python-developers)
  
-## Langsmith
+### Langsmith
 
 We do support Langsmith and you can follow their doc make it work.
 
