@@ -175,6 +175,8 @@ To clean up all the resources created by this sample:
 
 The resource group and all the resources will be deleted.
 
+## Guidance
+
 ## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
  
@@ -199,4 +201,3 @@ We do support Langsmith and you can follow their doc make it work.
 )
 
 ![langsmith](images/image-2.png)
-
